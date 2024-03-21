@@ -1,48 +1,33 @@
-const serverURL = "http://127.0.0.1:1271"
+import { post, get } from "./server.js";
 
+function getRandomID() {
+    let possible = "1234567890qwertyuiopasdfghjklzxcvbnm";
+    let output = "";
+    for (let i = 0; i < 20; i++) {
+        let chosen = Math.floor(possible.length*Math.random());
+        output += possible.substring(chosen, chosen + 1);
+    }
+    return output;
+}
 function demoTest() {
     let cow = {
-        x: 12,
-        y: 14,
+        game: "god",
+        y: Math.random(),
         text: "I_am_scared",
     }
-
-    // let url = window.location.href;
-    // let url = "http://127.0.0.1:1271/index.html";
-    fetch(serverURL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(cow),
-    });
+    if (Math.random() > 0.5) {
+        cow.game = "cat";
+    }
+    post(cow);
 }
 
-function getDataFromServer() {
-    fetch(serverURL + "/gimme")
-    .then(function(response) {
-        // When the page is loaded convert it to text
-        return response.text()
-    })
-    .then(function(html) {
-        // Initialize the DOM parser
-        let parser = new DOMParser();
-
-        // Parse the text
-        let body = parser.parseFromString(html, "text/html").body.innerText;
-
-        console.log(body);
-    })
-    .catch(function(err) {  
-        console.log('Failed to fetch page: ', err);  
-    });
+function demoTestB() {
+    get("cat");
 }
-
 function start() {
     console.log("Start");
 
     document.getElementById("test").addEventListener("click", demoTest);
-    document.getElementById("testB").addEventListener("click", getDataFromServer);
+    document.getElementById("testB").addEventListener("click", demoTestB);
 }
 start();

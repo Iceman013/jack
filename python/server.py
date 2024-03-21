@@ -22,12 +22,12 @@ while True:
         
         # Get method type
         method = data[0]
-        print(method)
+        print(method + " from " + str(addr))
         if (method == "POST"):
             json = data[len(data) - 1]
             dataStorage.storeData(json)
         elif (method == "GET"):
-            dataStorage.getData(data[1], connectionSocket)
+            dataStorage.getData(data[1][1:], connectionSocket)
 
         connectionSocket.close()
     except IOError:
